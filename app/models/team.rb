@@ -23,22 +23,33 @@ class Team < ApplicationRecord
     [teams, members]
   end
 
+  def update_team_scores
+    sortvalue = 9999.0
+    day1_score = get_team_day_scores(1)
+    day2_score = get_team_day_scores(2)
+    self.total_score = day1_score + day2_score
+    self.day1_score  = day1_score > 0.0 ? day1_score : sortvalue
+    self.day2_score  = day2_score > 0.0 ? day2_score : sortvalue
+    self.sort_score  = self.day1_score + self.day2_score
+  end
+
   private
   def self.clear_existing_teams
     TeamMember.delete_all
     Team.delete_all
   end
 
-  private
-
   def get_team_day_scores(day)
     day_score = 0.0
+
+    select = "team_members.id, team_members.team_id ,runners.id as runner_id, runners.day#{day}_score as day_score"
     scores = TeamMember.joins(:runner)
-      .select("team_members.team_id,runners.id as runner_id,runners.day#{day}_score as day_score")
+      .select(select)
       .where(team_id: self.id).where("runners.day#{day}_score > ?", 0.0)
       .order("runners.day#{day}_score")
       .limit(3)
-    if scores.count === 3
+
+    if scores.size === 3
       scores.each do |score|
         day_score += score.day_score if score.day_score
       end
