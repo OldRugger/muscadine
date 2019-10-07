@@ -15,6 +15,7 @@ group :development, :test do
   gem "rubycritic", :require => false
   gem 'database_cleaner'
   gem 'simplecov', :require => false
+  gem 'rspec-json_expectations'
 end
 
 group :development do
