@@ -1,9 +1,9 @@
+---
 development:
-  title:     '2020 Southeast Interscholastic Championships'
+  title: 2020 Southeast Interscholastic Championships
   hotfolder: results
-  max_time:  180
-
+  max_time: 180
 test:
-  title:     '2020 Southeast Interscholastic Championships'
-  hotfolder:  results
-  max_time:   180
+  title: 2020 Test
+  hotfolder: results
+  max_time: 180
