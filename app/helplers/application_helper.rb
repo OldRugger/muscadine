@@ -1,49 +1,39 @@
+# Application Support functions
 module ApplicationHelper
-
-  CLASS_LIST =  ['ISVM', 'ISVF', 'ISJVM', 'ISJVF', 'ISIM', 'ISIF', 'ISPM', 'ISPF']
+  CLASS_LIST =  ['ISVM', 'ISVF', 'ISJVM', 'ISJVF', 'ISIM', 'ISIF', 'ISPM', 'ISPF'].freeze
 
   def float_time_to_hhmmss(float_time)
-    return if float_time.class == String
     if (float_time && float_time > 0)
-      min = float_time.floor
-      mm = (min % 60).floor
-      hh = (min / 60).floor
-      ss = ((float_time - min) * 60).round
-      hhmmss = "#{hh.to_s}:#{format('%02d', mm)}:#{format('%02d', ss)}"
+      hhmmss = convert_float_to_hhmmss(float_time)
     else
       hhmmss = ""
     end
+    hhmmss
   end
 
-  def is_sqlite?
-  	ActiveRecord::Base.connection.adapter_name === "SQLite"
-  end
-
-  def time_to_value(classifier, time, float_time)
-    return 'OT'  if classifier === '5'  # Over Time
-    return 'DSQ' if classifier === '4'  # disqualified
-    return 'MP'  if classifier === '3'  # Missed Punch
-    return 'DNF' if classifier === '2'  # Did not finish
-    return 'DNS' if classifier === '1'  # Did not start
-    time = is_sqlite? ? float_time_to_hhmmss(float_time) : time
-    time
+  def convert_float_to_hhmmss(float_time)
+    min = float_time.floor
+    mm = (min % 60).floor
+    hh = (min / 60).floor
+    ss = ((float_time - min) * 60).round
+    hhmmss = "#{hh.to_s}:#{format('%02d', mm)}:#{format('%02d', ss)}"
   end
 
   def get_awt_hash
-    day1_awts = Day1Awt.all
-    day1_hash = Hash.new
-    day1_awts.each do |awt|
-      day1_hash[awt.entryclass] = {awt: float_time_to_hhmmss(awt.awt_float_time),
+    day1_hash = get_awt_hash_by_day(1)
+    day2_hash = get_awt_hash_by_day(2)
+    {day1: day1_hash, day2: day2_hash}
+  end
+
+  def get_awt_hash_by_day(day)
+    klass = "Day#{day}Awt".constantize
+    day_awts = klass.all
+    day_hash = Hash.new
+    day_awts.each do |awt|
+      day_hash[awt.entryclass] = {awt: float_time_to_hhmmss(awt.awt_float_time),
                                    cat: float_time_to_hhmmss(awt.cat_float_time) }
     end
-
-    day2_awts = Day2Awt.all
-    day2_hash = Hash.new
-    day2_awts.each do |awt|
-      day2_hash[awt.entryclass] = {awt: float_time_to_hhmmss(awt.awt_float_time),
-                                    cat: float_time_to_hhmmss(awt.cat_float_time) }
-    end
-    {day1: day1_hash, day2: day2_hash}
+    day_hash
   end
 
   def get_awt_with_runners
@@ -69,10 +59,8 @@ module ApplicationHelper
       r = n + 1
       if result.send("runner#{r}_float_time") == 0
         time = "n/a*"
-      elsif is_sqlite?
-        time = float_time_to_hhmmss(result.send("runner#{r}_float_time"))
       else
-        time = result.send("runner#{r}_time")
+        time = float_time_to_hhmmss(result.send("runner#{r}_float_time"))
       end
       @awt[day]["#{result.entryclass}#{r}"] = time
     end
