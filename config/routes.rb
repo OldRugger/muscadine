@@ -12,4 +12,12 @@ Rails.application.routes.draw do
     collection { post :persist }
   end
 
+  get "results/classes" => "results#classes"
+
+  get "results/awt" => "results#awt"
+
+  get "results/teams" => "results/teams"
+
+  get "results/awards" => "results/awards"
+
 end
