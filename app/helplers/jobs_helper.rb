@@ -61,4 +61,12 @@ module JobsHelper
     end
   end
 
+  def get_category_time(m_awt, f_awt)
+    male = 0
+    female = 0
+    male = m_awt[:awt] if m_awt
+    female = f_awt[:awt] if f_awt
+    cat_time = male < female  ? male : female
+  end
+
 end
