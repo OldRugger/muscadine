@@ -1,5 +1,5 @@
 require 'csv'
-
+# team model / methods
 class Team < ApplicationRecord
   has_many :team_members
 
@@ -7,11 +7,12 @@ class Team < ApplicationRecord
     teams = 0
     members = 0
     current_team = nil
-    current_class = nil
+    current_class = ""
     CSV.foreach(file.path, headers: true) do |row|
-      if (row['Team']) && (row['Class'].include? "IS")
-        if (current_team == nil || current_team.name != row['Team']) ||
-           current_class == nil || !(row['Class'].include? current_class)
+      team = row['Team']
+      is_class = row['Class']
+      if team && (is_class.include? "IS")
+        if (!current_team || current_team.name != team) || !(is_class.include? current_class)
           current_team = self.create_team(row)
           current_class = current_team.entryclass
           teams += 1
@@ -70,21 +71,21 @@ class Team < ApplicationRecord
     when 'ISVM', 'ISVF'
       entryclass = 'ISV'
     end
-    if entryclass == nil
-      return
+    if entryclass
+      Team.create(name: row['Team'],
+                  entryclass: entryclass,
+                  JROTC_branch: row['Branch'],
+                  school: row['School']  )
     end
-    Team.create(name: row['Team'],
-                entryclass: entryclass,
-                JROTC_branch: row['Branch'],
-                school: row['School']  )
   end
 
   def self.assign_member(team, row)
-    runner = Runner.where(database_id: row["Database ID"]).first
+    database_id = row["Database ID"]
+    runner = Runner.where(database_id: database_id).first
     if runner
       assign_runner_to_team(team, runner, row)
     else
-      raise "error: Runner with database_id #{row["Database ID"]} not found"
+      raise "error: Runner with database_id #{database_id} not found"
     end
 
   end
