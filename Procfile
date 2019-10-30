@@ -3,4 +3,4 @@
 #   web = 5100
 #
 api: bundle exec rails s
-web: npm run --prefix muscadine-vue dev
+web: npm start --prefix muscadine-ui dev
