@@ -1,8 +1,10 @@
+body {
+  background-color: #282c34;
+}
+
 .App {
   text-align: center;
-  background-color: #282c34;
-  min-height: 100vh;
-  color: white;
+  color: lightgrey;
 }
 
 .App-header {
@@ -10,8 +12,9 @@
   flex-direction: column;
   align-items: center;
   font-size: calc(10px + 2vmin);
-  color: white;
-  border-bottom: 3px solid red;
+  border-bottom: 2px solid rgb(87, 1, 1);
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 
 h1 {
@@ -25,4 +28,32 @@ table.center {
 
 .App-link {
   color: #09d3ac;
+}
+
+.awt-header {
+  width: 100%;
+  background-color: rgb(112, 1, 1);
+  border-bottom: 1px solid rgb(87, 1, 1);
+  font-weight: bold;
+  font-size: 12px;
+  color: lightgrey;
+}
+.awt-day-header {
+  width: 100%;
+  background-color: darkgrey;
+  color: darkred;
+  border-bottom: 1px solid rgb(87, 1, 1);
+  font-weight: bold;
+}
+.awt-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.awt-col-header {
+  font-weight: bold;
+}
+.awt-row-header {
+  font-weight: bold;
 }

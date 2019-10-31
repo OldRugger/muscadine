@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header from "./Header";
+import Header from "../components/Header";
 import "../App.css";
 import axios from "axios";
 
@@ -23,7 +23,10 @@ export default function ConfigPage() {
 
   // Return a table with some data from the API.
   return config.loading ? (
-    <div>Loading...</div>
+    <div className="App">
+      <Header />
+      Loading...
+    </div>
   ) : (
     <div className="App">
       <Header />

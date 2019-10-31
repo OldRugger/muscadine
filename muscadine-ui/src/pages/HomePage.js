@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import Header from "./Header";
+import Header from "../components/Header";
 
 import "../App.css";
 
@@ -11,6 +11,9 @@ export default class HomePage extends React.Component {
         <Header />
         <p>
           <Link to="/config">Configuration</Link>
+        </p>
+        <p>
+          <Link to="/teams">Team Results</Link>
         </p>
       </div>
     );
