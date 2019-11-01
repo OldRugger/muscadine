@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import "../App.css";
+import Header from "../components/Header";
+import AwtRules from "../components/AwtRules";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import "../App.css";
 
-export default function Awt() {
+export default function AwtPage() {
   const initialAwtState = {
-    Awt: {},
+    awt: {},
     loading: true
   };
   const [awt, setAwt] = useState(initialAwtState);
@@ -20,6 +21,8 @@ export default function Awt() {
     "ISPM",
     "ISPF"
   ];
+
+  // Using useEffect to retrieve data from an API (similar to componentDidMount in a class)
   useEffect(() => {
     const getAwt = async () => {
       const { data } = await axios(
@@ -33,13 +36,14 @@ export default function Awt() {
   }, []); // Don't forget the `[]`, which will prevent useEffect from running in an infinite loop
 
   return awt.loading ? (
-    <div className="App">Loading...</div>
+    <div className="App">
+      <Header />
+      Loading...
+    </div>
   ) : (
     <div className="App">
-      <div className="awt-header">
-        <Link to="/awt">Average Weighted Time</Link>
-      </div>
-
+      <Header />
+      <div className="awt-header">Average Weighted Time</div>
       <table className="awt-table">
         <thead>
           <tr className="awt-day-header">
@@ -58,6 +62,28 @@ export default function Awt() {
           </tr>
         </thead>
         <tbody>
+          {["1", "2", "3"].map(r => {
+            return (
+              <tr>
+                <td className="awt-row-header">Runner{r}</td>
+                {classes.map(className => {
+                  return (
+                    <td key={className}>
+                      {awt[1][className] ? awt[1][className + r] : "n/a"}
+                    </td>
+                  );
+                })}
+                <td className="awt-row-header">Runner{r}</td>
+                {classes.map(className => {
+                  return (
+                    <td key={className}>
+                      {awt[1][className] ? awt[2][className + r] : "n/a"}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
           <tr>
             <td className="awt-row-header">AWT</td>
             {classes.map(className => {
@@ -76,8 +102,27 @@ export default function Awt() {
               );
             })}
           </tr>
+          <tr>
+            <td className="awt-row-header">CAT</td>
+            {classes.map(className => {
+              return (
+                <td key={className}>
+                  {awt[1][className] ? awt[1][className + "_cat"] : "n/a"}
+                </td>
+              );
+            })}
+            <td className="awt-row-header">CAT</td>
+            {classes.map(className => {
+              return (
+                <td key={className}>
+                  {awt[1][className] ? awt[2][className + "_cat"] : "n/a"}
+                </td>
+              );
+            })}
+          </tr>
         </tbody>
       </table>
+      <AwtRules />
     </div>
   );
 }

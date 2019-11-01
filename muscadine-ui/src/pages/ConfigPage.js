@@ -13,7 +13,9 @@ export default function ConfigPage() {
   // Using useEffect to retrieve data from an API (similar to componentDidMount in a class)
   useEffect(() => {
     const getConfig = async () => {
-      const { data } = await axios(`http://localhost:5000/config`);
+      const { data } = await axios(
+        "http://" + window.location.hostname + ":5000/config"
+      );
       setConfig(data);
     };
 

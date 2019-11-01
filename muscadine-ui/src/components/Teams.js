@@ -15,7 +15,9 @@ export default function Teams() {
 
   useEffect(() => {
     const getTeams = async () => {
-      const { data } = await axios(`http://localhost:5000/results/teams`);
+      const { data } = await axios(
+        "http://" + window.location.hostname + ":5000/results/teams"
+      );
       console.log(data);
       setTeams(data);
     };
