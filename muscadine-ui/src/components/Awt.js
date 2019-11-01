@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Awt() {
   const initialAwtState = {
@@ -21,7 +22,9 @@ export default function Awt() {
   ];
   useEffect(() => {
     const getAwt = async () => {
-      const { data } = await axios(`http://localhost:5000/results/awt`);
+      const { data } = await axios(
+        "http://" + window.location.hostname + ":5000/results/awt"
+      );
       setAwt(data);
     };
 
@@ -33,7 +36,9 @@ export default function Awt() {
     <div className="App">Loading...</div>
   ) : (
     <div className="App">
-      <div className="awt-header">Average Weighted Time</div>
+      <div className="awt-header">
+        <Link to="/awt">Average Weighted Time</Link>
+      </div>
 
       <table className="awt-table">
         <thead>

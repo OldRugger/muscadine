@@ -1,6 +1,9 @@
 body {
   background-color: #282c34;
 }
+a {
+  color: lightgrey;
+}
 
 .App {
   text-align: center;
@@ -56,6 +59,10 @@ table.center {
 }
 .awt-row-header {
   font-weight: bold;
+}
+.awt-rules {
+  text-align: left;
+  padding: 40px;
 }
 .team-header {
   width: 100%;

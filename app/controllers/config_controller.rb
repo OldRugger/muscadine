@@ -3,7 +3,7 @@ require 'yaml'
 class ConfigController < ApplicationController
 
   def index
-    if config.count = 0
+    if Config.count == 0
       load_config
     end
     render json: Config.last
