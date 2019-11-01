@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import Awt from "../components/Awt";
+import Teams from "../components/Teams";
 
 import "../App.css";
 
@@ -10,7 +11,7 @@ export default class TeamsPage extends React.Component {
       <div className="App">
         <Header />
         <Awt />
-        <h2>teams</h2>
+        <Teams />
       </div>
     );
   }
