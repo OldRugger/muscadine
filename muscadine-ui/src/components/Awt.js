@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../App.css";
 import axios from "axios";
 
-export default function AwtPage() {
+export default function Awt() {
   const initialAwtState = {
     Awt: {},
     loading: true
@@ -38,8 +38,8 @@ export default function AwtPage() {
       <table className="awt-table">
         <thead>
           <tr className="awt-day-header">
-            <td colSpan={9}>Day1</td>
-            <td colSpan={9}>Day2</td>
+            <td colSpan={9}>Day 1</td>
+            <td colSpan={9}>Day 2</td>
           </tr>
           <tr className="awt-col-header">
             <td>Class</td>
