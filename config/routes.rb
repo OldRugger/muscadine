@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :teams, only: [:index, :show] do
+  resources :teams, only: [:show] do
     collection { post :import }
   end
 
