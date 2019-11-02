@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
 import Category from "../components/Category";
-
 import axios from "axios";
 
 export default function Teams() {

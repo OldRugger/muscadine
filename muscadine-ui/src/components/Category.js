@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../App.css";
 
 export default class Category extends React.Component {
@@ -24,7 +25,10 @@ export default class Category extends React.Component {
             <tr key={team.name}>
               <td className="team-results">{team.place}</td>
               <td className="team-results">
-                <b>{team.name}</b> ({team.total_score.toFixed(3)})<br />
+                <b>
+                  <Link to={"/teams/" + team.id}>{team.name}</Link>
+                </b>{" "}
+                ({team.total_score.toFixed(3)})<br />
                 <b>Day1: </b>
                 {team.day1 ? team.day1.results : "n/a"}
                 <br />

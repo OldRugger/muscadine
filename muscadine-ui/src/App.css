@@ -90,3 +90,17 @@ table.center {
   vertical-align: text-top;
   text-align: left;
 }
+.team-detail-row-header {
+  width: 100%;
+  border: 3px solid rgb(87, 1, 1);
+  font-weight: bold;
+}
+
+.team-detail-column-header {
+  border: 3px solid rgb(87, 1, 1);
+  font-weight: bold;
+}
+
+.cell-left {
+  text-align: left;
+}
