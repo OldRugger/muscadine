@@ -1,5 +1,14 @@
 class ResultsController < ApplicationController
 
+  def clear
+    puts "====> clear all resutls <====="
+    TeamMember.delete_all
+    Team.delete_all
+    Runner.delete_all
+    Day1Awt.delete_all
+    Day2Awt.delete_all
+  end
+
   def awt
     awt = get_awt_with_runners
     render json: awt.to_json
@@ -74,4 +83,5 @@ class ResultsController < ApplicationController
       end
     end
   end
+
 end

@@ -6,4 +6,8 @@ class RunnersController < ApplicationController
     end
     render json: { added: @added, skipped: @skipped }, status: :created
   end
+
+  def index
+    render json: Runner.all.order(:entryclass)
+  end
 end

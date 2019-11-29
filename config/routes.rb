@@ -20,4 +20,6 @@ Rails.application.routes.draw do
 
   get "results/awards" => "results/awards"
 
+  post "results/clear" => "results/clear"
+
 end

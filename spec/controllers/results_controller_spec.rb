@@ -13,14 +13,28 @@ RSpec.describe ResultsController, type: :controller do
 
   describe "Get Calculated results" do
     before(:all) do
-      # preload the runners and teams
-      Runner.import(fixture_file_upload("OE0010_import_test_data.csv"))
-      Team.import(fixture_file_upload("teams.csv"))
-      source = file_fixture("OE0013_two_day_results.csv")
-      @target = File.join(".", "tmp/OE0013_two_day_results.csv")
+      # load day 1 results
+      source = file_fixture("OE0014_day_one_results.csv")
+      @target = File.join(".", "tmp/OE0014_day_one_results.csv")
+      FileUtils.cp(source, @target)
+      TeamResults.new.perform([@target])
+      # load day 2 results
+      APP_CONFIG[:input]["day"] = 2
+      source = file_fixture("OE0014_day_two_results.csv")
+      @target = File.join(".", "tmp/OE0014_day_two_results.csv")
       FileUtils.cp(source, @target)
       TeamResults.new.perform([@target])
     end
+
+    it "should clear all results" do
+      post :clear
+      expect(TeamMember.count).to eq(0)
+      expect(Team.count).to eq(0)
+      expect(Runner.count).to eq(0)
+      expect(Day1Awt.count).to eq(0)
+      expect(Day2Awt.count).to eq(0)
+    end
+
 
     it "should for both days of a two day met" do
       get :awt
@@ -42,8 +56,8 @@ RSpec.describe ResultsController, type: :controller do
       expect(json_response["awt"].count).to eql(2)
       expect(json_response["awt"]["day1"].count).to eql(43)
       expect(json_response["awt"]["day2"].count).to eql(43)
-      expect(json_response["awt"]["day1"]["Hogwarts Varsity Silver"]["results"]).to eql("Doe_121 (80.845), Doe_127 (81.568), Doe_102 (97.709)")
-      expect(json_response["awt"]["day2"]["Hogwarts Varsity Silver"]["results"]).to eql("Doe_121 (64.315), Doe_127 (71.212), Doe_102 (76.844)")
+      expect(json_response["awt"]["day1"]["Hogwarts Varsity Silver"]["results"]).to eql("Wilkerson (80.845), Stephenson (81.568), Morse (97.709)")
+      expect(json_response["awt"]["day2"]["Hogwarts Varsity Silver"]["results"]).to eql("Wilkerson (64.315), Stephenson (71.212), Morse (76.844)")
     end
   end
 

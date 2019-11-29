@@ -4,11 +4,11 @@ import Category from "../components/Category";
 import axios from "axios";
 
 export default function Teams() {
-  const initialAwtState = {
+  const initialTeamState = {
     teams: {},
     loading: true
   };
-  const [teams, setTeams] = useState(initialAwtState);
+  const [teams, setTeams] = useState(initialTeamState);
   // TODO: get category list from server
   const cat = ["isv", "isjv", "isi", "isp", "jrotc"];
 

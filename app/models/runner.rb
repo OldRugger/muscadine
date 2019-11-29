@@ -11,38 +11,49 @@ class Runner < ApplicationRecord
     self.save
   end
 
-  def self.import(file)
-    added = 0
-    skipped = 0
-    self.clear_existing_data
-    CSV.foreach(file.path, headers: true) do |row|
-      if row["Short"].include? "IS"
-        create_runner(row)
-        added += 1
-      else
-        skipped += 1
-      end
-    end
-    [added, skipped]
-  end
-
   def self.import_results_row(row)
-    float_time_one, time_one = self.get_float_time_from_value(row, "Time1")
-    float_time_two, time_two = self.get_float_time_from_value(row, "Time2")
-    float_total, total = self.get_float_time_from_value(row, "Total")
-    Runner.where(database_id: row['Database Id'].to_s)
-      .update_all(time1: time_one,
-                  float_time1: float_time_one,
-                  classifier1: row["Classifier1"].to_s,
-                  time2: time_two,
-                  float_time2: float_time_two,
-                  classifier2: row["Classifier2"].to_s,
-                  total_time: total,
-                  float_total_time: float_total)
-
+    time_key = APP_CONFIG[:input]['fields']['time']
+    classifier_key = APP_CONFIG[:input]['fields']['classifier']
+    day = APP_CONFIG[:input]['day']
+    runner = self.find_or_create_runner(row)
+    float_time, time = self.get_float_time_from_value(row, time_key)
+    if day == 1
+      runner.time1 = time
+      runner.float_time1 = float_time
+      runner.classifier1 = row[classifier_key]
+    end
+    if day == 2
+      runner.time2 = time
+      runner.float_time2 = float_time
+      runner.classifier2 = row[classifier_key]
+    end
+    runner.float_total_time = (runner.float_time1 ? runner.float_time1 : 0) + (runner.float_time2 ? runner.float_time2 : 0)
+    ## todo - get display time
+    runner.save
   end
 
   private
+
+  def self.find_or_create_runner(row)
+    unique_id =  APP_CONFIG[:input]["fields"]["unique_id"]
+    runner = Runner.where(database_id: row[unique_id]).first
+    return runner if runner
+    self.create_runner(row)
+  end
+
+  def self.create_runner(row)
+    fields = APP_CONFIG[:input]["fields"]
+    runner = Runner.create(database_id: row[fields["unique_id"]],
+      surname: row[fields["lastname"]].gsub("'"){"\\'"},
+      firstname: row[fields["firstname"]].gsub("'"){"\\'"},
+      school: row[fields["school"]].gsub("'"){"\\'"},
+      entryclass: row[fields["entry_class"]],
+      gender: row[fields["gender"]])
+    Team.assign_member(row, fields, runner) if row[fields["team"]]
+    runner
+  end
+
+
 
   def self.get_float_time_from_value(row, value)
     time = row[value]
@@ -54,15 +65,6 @@ class Runner < ApplicationRecord
       float_time = 0.0
     end
     [float_time, time]
-  end
-
-  def self.create_runner(row)
-    Runner.create(database_id: row["Database Id"],
-      surname: row["Surname"].gsub("'"){"\\'"},
-      firstname: row["First name"].gsub("'"){"\\'"},
-      school: row["City"].gsub("'"){"\\'"},
-      entryclass: row["Short"],
-      gender: row['S'])
   end
 
   def self.clear_existing_data

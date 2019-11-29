@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 2019_10_15_131255) do
     t.float "day2_score"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["database_id"], name: "index_runners_on_database_id", unique: true
   end
 
   create_table "team_members", force: :cascade do |t|

@@ -94,6 +94,7 @@ table.center {
   width: 100%;
   border: 3px solid rgb(87, 1, 1);
   font-weight: bold;
+  background-color: rgb(51, 49, 49);
 }
 
 .team-detail-column-header {
@@ -103,4 +104,14 @@ table.center {
 
 .cell-left {
   text-align: left;
+}
+.import-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.runners-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
 }

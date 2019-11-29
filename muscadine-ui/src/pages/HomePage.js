@@ -10,6 +10,9 @@ export default class HomePage extends React.Component {
       <div className="App">
         <Header />
         <p>
+          <Link to="/import">Import Runners / Teams</Link>
+        </p>
+        <p>
           <Link to="/config">Configuration</Link>
         </p>
         <p>

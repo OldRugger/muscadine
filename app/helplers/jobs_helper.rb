@@ -19,14 +19,10 @@ module JobsHelper
   end
 
   def process_results_file(file)
+    entry_class = APP_CONFIG[:input]["fields"]["entry_class"]
     ActiveRecord::Base.transaction do
       CSV.foreach(file, :headers => true, :col_sep=> ',', :skip_blanks=>true, :row_sep=>:auto ) do |row|
-        database_id = row['Database Id']
-        if ( (database_id != nil) &&
-             (database_id.length > 0) &&
-             (row['Short'].start_with?('IS')) )
-            Runner.import_results_row(row)
-        end
+        Runner.import_results_row(row) if row[entry_class].start_with?('IS')
       end
     end
     File.delete(file)
