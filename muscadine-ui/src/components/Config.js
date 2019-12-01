@@ -94,6 +94,9 @@ export default class ShowRunners extends React.Component {
                     id="hotfolder"
                     defaultValue={this.state.config.hotfolder}
                     size="38"
+                    onChange={() => {
+                      this.handleChangeEvent(this.state.config.title);
+                    }}
                   />
                 </td>
               </tr>
@@ -106,6 +109,9 @@ export default class ShowRunners extends React.Component {
                     id="max_time"
                     defaultValue={this.state.config.max_time}
                     size="38"
+                    onChange={() => {
+                      this.handleChangeEvent(this.state.config.title);
+                    }}
                   />
                 </td>
               </tr>
@@ -118,6 +124,9 @@ export default class ShowRunners extends React.Component {
                     id="day"
                     defaultValue={this.state.config.day}
                     size="38"
+                    onChange={() => {
+                      this.handleChangeEvent(this.state.config.title);
+                    }}
                   />
                 </td>
               </tr>
@@ -141,6 +150,9 @@ export default class ShowRunners extends React.Component {
                     id="unique_id"
                     defaultValue={this.state.config.unique_id}
                     size="15"
+                    onChange={() => {
+                      this.handleChangeEvent(this.state.config.title);
+                    }}
                   />
                 </td>
               </tr>
@@ -153,6 +165,9 @@ export default class ShowRunners extends React.Component {
                     id="firstname"
                     defaultValue={this.state.config.firstname}
                     size="15"
+                    onChange={() => {
+                      this.handleChangeEvent(this.state.config.title);
+                    }}
                   />
                 </td>
               </tr>
@@ -165,6 +180,9 @@ export default class ShowRunners extends React.Component {
                     id="lastname"
                     defaultValue={this.state.config.lastname}
                     size="15"
+                    onChange={() => {
+                      this.handleChangeEvent(this.state.config.title);
+                    }}
                   />
                 </td>
               </tr>
@@ -177,6 +195,9 @@ export default class ShowRunners extends React.Component {
                     id="entry_class"
                     defaultValue={this.state.config.entry_class}
                     size="15"
+                    onChange={() => {
+                      this.handleChangeEvent(this.state.config.title);
+                    }}
                   />
                 </td>
               </tr>
@@ -189,6 +210,9 @@ export default class ShowRunners extends React.Component {
                     id="gender"
                     defaultValue={this.state.config.gender}
                     size="15"
+                    onChange={() => {
+                      this.handleChangeEvent(this.state.config.title);
+                    }}
                   />
                 </td>
               </tr>
@@ -201,6 +225,9 @@ export default class ShowRunners extends React.Component {
                     id="school"
                     defaultValue={this.state.config.school}
                     size="15"
+                    onChange={() => {
+                      this.handleChangeEvent(this.state.config.title);
+                    }}
                   />
                 </td>
               </tr>
@@ -213,6 +240,9 @@ export default class ShowRunners extends React.Component {
                     id="team"
                     defaultValue={this.state.config.team}
                     size="15"
+                    onChange={() => {
+                      this.handleChangeEvent(this.state.config.title);
+                    }}
                   />
                 </td>
               </tr>
@@ -225,6 +255,9 @@ export default class ShowRunners extends React.Component {
                     id="time"
                     defaultValue={this.state.config.time}
                     size="15"
+                    onChange={() => {
+                      this.handleChangeEvent(this.state.config.title);
+                    }}
                   />
                 </td>
               </tr>
@@ -237,6 +270,9 @@ export default class ShowRunners extends React.Component {
                     id="classifier"
                     defaultValue={this.state.config.classifier}
                     size="15"
+                    onChange={() => {
+                      this.handleChangeEvent(this.state.config.title);
+                    }}
                   />
                 </td>
               </tr>
