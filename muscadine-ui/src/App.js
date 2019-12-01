@@ -5,7 +5,7 @@ import ConfigPage from "./pages/ConfigPage";
 import TeamsPage from "./pages/TeamsPage";
 import AwtPage from "./pages/AwtPage";
 import TeamDetailPage from "./pages/TeamDetailPage";
-import ImportPage from "./pages/ImportPage";
+import ResultsPage from "./pages/ResultsPage";
 
 export default function App() {
   return (
@@ -15,7 +15,7 @@ export default function App() {
       <Route path="/teams/:teamId" component={TeamDetailPage} />
       <Route path="/teams" component={TeamsPage} />
       <Route path="/awt" component={AwtPage} />
-      <Route path="/import" component={ImportPage} />
+      <Route path="/results" component={ResultsPage} />
     </Switch>
   );
 }

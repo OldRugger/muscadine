@@ -16,6 +16,17 @@ ActiveRecord::Schema.define(version: 2019_10_15_131255) do
     t.string "title"
     t.string "hotfolder"
     t.integer "max_time"
+    t.integer "day"
+    t.string "unique_id"
+    t.string "firstname"
+    t.string "lastname"
+    t.string "entry_class"
+    t.string "gender"
+    t.string "classifier"
+    t.string "time"
+    t.string "school"
+    t.string "team"
+    t.string "jrotc"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -8,6 +8,6 @@ class RunnersController < ApplicationController
   end
 
   def index
-    render json: Runner.all.order(:entryclass)
+    render json: Runner.joins(:team).all.order(:school, "teams.name")
   end
 end

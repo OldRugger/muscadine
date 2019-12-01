@@ -2,6 +2,7 @@ require 'csv'
 # Runner model
 class Runner < ApplicationRecord
   has_one :team_member
+  has_one :team, through: :team_member
 
   def update_runners_scores(day, awt, cat)
     classifier = self.send("classifier#{day}")
@@ -27,12 +28,47 @@ class Runner < ApplicationRecord
       runner.float_time2 = float_time
       runner.classifier2 = row[classifier_key]
     end
-    runner.float_total_time = (runner.float_time1 ? runner.float_time1 : 0) + (runner.float_time2 ? runner.float_time2 : 0)
-    ## todo - get display time
+    if  runner.float_time1 &&  runner.float_time2
+      runner.float_total_time = (runner.float_time1 ? runner.float_time1 : 0) + (runner.float_time2 ? runner.float_time2 : 0)
+      ## todo - get display time
+    end
     runner.save
   end
 
+  def as_json(options = {})
+    time1 = self.time1 ? self.time1.strftime("%T") : ""
+    time2 = self.time2 ? self.time2.strftime("%T") : ""
+    day1_score = self.day1_score ? self.day1_score.round(4) : ""
+    day2_score = self.day2_score ? self.day2_score.round(4) : ""
+    total_time = get_total_time
+    total_score = get_total_score
+
+    super(options).merge({
+      'team_name' => self.team.name,
+      'time1' => time1,
+      'time2' => time2,
+      'day1_score' => day1_score,
+      'day2_score' => day2_score,
+      'total_time' => total_time,
+      'total_score' => total_score
+    })
+  end
+
   private
+
+  def get_total_time
+    total_time = ""
+    if (self.classifier1 == "0" && self.time1) &&
+       (self.classifier2 == "0" && self.time2)
+       total_time = (time1 + time2).strftime("%T")
+    end
+    total_time
+  end
+
+  def get_total_score
+    return (self.day1_score + self.day2_score).round(3) if self.day1_score && self.day2_score
+    ''
+  end
 
   def self.find_or_create_runner(row)
     unique_id =  APP_CONFIG[:input]["fields"]["unique_id"]

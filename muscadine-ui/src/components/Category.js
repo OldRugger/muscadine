@@ -33,7 +33,7 @@ export default class Category extends React.Component {
                 {team.day1 ? team.day1.results : "n/a"}
                 <br />
                 <b>Day2: </b>
-                {team.day1 ? team.day1.results : "n/a"}
+                {team.day2 ? team.day2.results : "n/a"}
                 <br />
               </td>
             </tr>

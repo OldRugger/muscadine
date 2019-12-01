@@ -53,5 +53,14 @@ RSpec.describe ConfigController, type: :controller do
       expect(time).to be_within(5.second).of Time.now
     end
   end
+  describe "load config from yaml" do
+    it "should write config to config.yml" do
+      post :load
+      expect(Config.count).to eq(1)
+      expect(Config.last.as_json).to include_json("unique_id": "Stno", "firstname": "First name",
+             "lastname": "Surname", "entry_class": "Short", "classifier": "Classifier", "time": "Time",
+             "school": "Text2", "team": "Text3", "jrotc": "Text1" )
+    end
+  end
 
 end

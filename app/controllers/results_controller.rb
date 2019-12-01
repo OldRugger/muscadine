@@ -7,6 +7,15 @@ class ResultsController < ApplicationController
     Runner.delete_all
     Day1Awt.delete_all
     Day2Awt.delete_all
+    render json: {tableCounts: {
+        TeamMember: TeamMember.count,
+        Team: Team.count,
+        Runner: Runner.count,
+        Day1Awt: Day1Awt.count,
+        Day2Awt: Day2Awt.count
+      }
+    }
+
   end
 
   def awt
