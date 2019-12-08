@@ -1,5 +1,4 @@
 import React from "react";
-
 import axios from "axios";
 import "../App.css";
 import ConfigPage from "../pages/ConfigPage";
@@ -8,6 +7,7 @@ export default class ShowRunners extends React.Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleReset = this.handleReset.bind(this);
   }
 
   state = {
@@ -43,18 +43,31 @@ export default class ShowRunners extends React.Component {
       window.location.hostname +
       ":5000/config/" +
       this.state.config.id;
-    debugger;
     axios.put(url, data).then(
       response => {
-        alert("config update");
+        alert("config updated");
       },
       error => {
         alert("config update failed");
         console.log(error);
       }
     );
-    this.loadConfigData();
-    this.forceUpdate();
+    window.location.reload(false);
+  }
+  handleReset(event) {
+    event.preventDefault();
+    const form = event.target;
+    const url = "http://" + window.location.hostname + ":5000/config/load";
+    axios.post(url).then(
+      response => {
+        alert("config reset");
+      },
+      error => {
+        alert("config reset failed");
+        console.log(error);
+      }
+    );
+    window.location.reload(false);
   }
   render() {
     return (
@@ -279,8 +292,11 @@ export default class ShowRunners extends React.Component {
             </tbody>
           </table>
           <br />
-          <br />
           <button>Update</button>
+        </form>
+        <br />
+        <form onSubmit={this.handleReset}>
+          <button>Reset Defaults</button>
         </form>
       </div>
     );
