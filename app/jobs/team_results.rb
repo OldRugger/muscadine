@@ -54,26 +54,6 @@ class TeamResults
     runners.each do |runner|
       runner.update_runners_scores(1, awt1, day1_cat)
       runner.update_runners_scores(2, awt2, day2_cat)
-      # day1_classifier = runner.classifier1
-      # day2_classifier = runner.classifier2
-
-      # if day1_classifier
-      #   if  day1_classifier != "0"
-      #     runner.day1_score = 10 + (60 * (max_time/day1_cat))
-      #   elsif (day1_classifier === "0" && runner.float_time1 > 0 && awt1)
-      #     runner.day1_score = 60 * (runner.float_time1/awt1[:awt])
-      #   end
-      # end
-      # if day2_classifier
-      #   if day2_classifier != "0"
-      #     runner.day2_score = 10 + (60 * (max_time/day2_cat))
-      #   elsif (day2_classifier === "0" && runner.float_time2 > 0 && awt2)
-      #     runner.day2_score = 60 * (runner.float_time2/awt2[:awt])
-      #   end
-      #   if (awt1 || awt2)
-      #     runner.save
-      #   end
-      # end
     end
   end
 

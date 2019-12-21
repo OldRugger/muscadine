@@ -30,7 +30,7 @@ class Runner < ApplicationRecord
     end
     if  runner.float_time1 &&  runner.float_time2
       runner.float_total_time = (runner.float_time1 ? runner.float_time1 : 0) + (runner.float_time2 ? runner.float_time2 : 0)
-      ## todo - get display time
+      ## TODO - get display time
     end
     runner.save
   end
@@ -142,7 +142,7 @@ class Runner < ApplicationRecord
     float_time = self.send("float_time#{day}")
     if  classifier != "0"
       self.send("day#{day}_score=", 10 + (60 * (max_time/cat) ) )
-    elsif (classifier === "0" && float_time1 > 0 && awt)
+    elsif (classifier === "0" && float_time > 0 && awt)
       self.send("day#{day}_score=", 60 * (float_time/awt[:awt]) )
     end
   end

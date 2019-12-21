@@ -24,10 +24,6 @@ RSpec.describe TeamResults, type: :job do
     it "should calculate the Average Waited Times- varsity" do
       isvm = Day1Awt.where(entryclass: "ISVM").order("runner1_float_time").first
       isvf = Day1Awt.where(entryclass: "ISVF").order("runner1_float_time").first
-      isjvm = Day1Awt.where(entryclass: "ISJVM").order("runner1_float_time").first
-      isjvf = Day1Awt.where(entryclass: "ISJVF").order("runner1_float_time").first
-      isim = Day1Awt.where(entryclass: "ISJVM").order("runner1_float_time").first
-      isif = Day1Awt.where(entryclass: "ISJVF").order("runner1_float_time").first
       expect(isvm.runner1_float_time).to equal(54.18333333333333)
       expect(isvm.runner2_float_time).to equal(57.65)
       expect(isvm.runner3_float_time).to equal(58.233333333333334)
@@ -36,8 +32,7 @@ RSpec.describe TeamResults, type: :job do
       expect(isvf.runner2_float_time).to equal(76.7)
       expect(isvf.runner3_float_time).to equal(79.4)
       expect(isvf.awt_float_time).to equal(74.93333333333334)
-
-    end
+   end
 
     it "should calculate the Average Waited Times- junior varsity" do
       isjvm = Day1Awt.where(entryclass: "ISJVM").order("runner1_float_time").first

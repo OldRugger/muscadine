@@ -77,7 +77,6 @@ export default function TeamDetailPage(params) {
           </tr>
         </thead>
         <tbody>
-          {console.log("howdy " + data.runners)}
           {data.runners.map(r => {
             return (
               <tr>
@@ -89,10 +88,14 @@ export default function TeamDetailPage(params) {
                 <td>{data.day1[r.entryclass].awt}</td>
                 <td>{data.day1[r.entryclass].cat}</td>
                 <td>{r.day1_score.toFixed(3)}</td>
-                <td>{r.time2.substring(11)}</td>
-                <td>{data.day2[r.entryclass].awt}</td>
-                <td>{data.day2[r.entryclass].cat}</td>
-                <td>{r.day2_score.toFixed(3)}</td>
+                <td>{r.time2 ? r.time2.substring(11) : ""}</td>
+                <td>
+                  {data.day2[r.entryclass] ? data.day2[r.entryclass].awt : ""}
+                </td>
+                <td>
+                  {data.day2[r.entryclass] ? data.day2[r.entryclass].cat : ""}
+                </td>
+                <td>{r.day2_score ? r.day2_score.toFixed(3) : ""}</td>
               </tr>
             );
           })}

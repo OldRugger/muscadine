@@ -54,8 +54,8 @@ RSpec.describe ResultsController, type: :controller do
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)
       expect(json_response["awt"].count).to eql(2)
-      expect(json_response["awt"]["day1"].count).to eql(43)
-      expect(json_response["awt"]["day2"].count).to eql(43)
+      expect(json_response["awt"]["day1"].count).to eql(44)
+      expect(json_response["awt"]["day2"].count).to eql(44)
       expect(json_response["awt"]["day1"]["Hogwarts Varsity Silver"]["results"]).to eql("Wilkerson (80.845), Stephenson (81.568), Morse (97.709)")
       expect(json_response["awt"]["day2"]["Hogwarts Varsity Silver"]["results"]).to eql("Wilkerson (64.315), Stephenson (71.212), Morse (76.844)")
     end

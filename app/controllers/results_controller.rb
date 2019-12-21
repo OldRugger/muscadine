@@ -91,6 +91,7 @@ class ResultsController < ApplicationController
         end
       end
     end
+    day_hash[team_name] = {"results": results_str, "id": team_id} if results_str
   end
 
 end
