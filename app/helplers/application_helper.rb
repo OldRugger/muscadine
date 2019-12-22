@@ -31,7 +31,7 @@ module ApplicationHelper
     day_hash = Hash.new
     day_awts.each do |awt|
       day_hash[awt.entryclass] = {awt: float_time_to_hhmmss(awt.awt_float_time),
-                                   cat: float_time_to_hhmmss(awt.cat_float_time) }
+                                  cat: float_time_to_hhmmss(awt.cat_float_time) }
     end
     day_hash
   end

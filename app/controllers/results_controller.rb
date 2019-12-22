@@ -1,5 +1,23 @@
 class ResultsController < ApplicationController
 
+  def clear
+    puts "====> clear all resutls <====="
+    TeamMember.delete_all
+    Team.delete_all
+    Runner.delete_all
+    Day1Awt.delete_all
+    Day2Awt.delete_all
+    render json: {tableCounts: {
+        TeamMember: TeamMember.count,
+        Team: Team.count,
+        Runner: Runner.count,
+        Day1Awt: Day1Awt.count,
+        Day2Awt: Day2Awt.count
+      }
+    }
+
+  end
+
   def awt
     awt = get_awt_with_runners
     render json: awt.to_json
@@ -73,5 +91,7 @@ class ResultsController < ApplicationController
         end
       end
     end
+    day_hash[team_name] = {"results": results_str, "id": team_id} if results_str
   end
+
 end

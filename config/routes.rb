@@ -9,7 +9,10 @@ Rails.application.routes.draw do
   end
 
   resources :config, only: [:index, :show, :update] do
-    collection { post :persist }
+    collection do
+      post :load
+      post :persist
+    end
   end
 
   get "results/classes" => "results#classes"
@@ -19,5 +22,7 @@ Rails.application.routes.draw do
   get "results/teams" => "results/teams"
 
   get "results/awards" => "results/awards"
+
+  post "results/clear" => "results/clear"
 
 end

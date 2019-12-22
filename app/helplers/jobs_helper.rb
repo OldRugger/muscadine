@@ -19,14 +19,10 @@ module JobsHelper
   end
 
   def process_results_file(file)
+    entry_class = Config.last.entry_class
     ActiveRecord::Base.transaction do
       CSV.foreach(file, :headers => true, :col_sep=> ',', :skip_blanks=>true, :row_sep=>:auto ) do |row|
-        database_id = row['Database Id']
-        if ( (database_id != nil) &&
-             (database_id.length > 0) &&
-             (row['Short'].start_with?('IS')) )
-            Runner.import_results_row(row)
-        end
+        Runner.import_results_row(row) if row[entry_class].start_with?('IS')
       end
     end
     File.delete(file)
@@ -62,8 +58,8 @@ module JobsHelper
   end
 
   def get_category_time(m_awt, f_awt)
-    male = 0
-    female = 0
+    male = 180
+    female = 180
     male = m_awt[:awt] if m_awt
     female = f_awt[:awt] if f_awt
     cat_time = male < female  ? male : female

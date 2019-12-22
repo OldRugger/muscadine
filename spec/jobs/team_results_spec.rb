@@ -4,11 +4,17 @@ require 'sucker_punch'
 RSpec.describe TeamResults, type: :job do
   describe "Should import results and calculate team results" do
     before(:all) do
-      # preload the runners and teams
-      Runner.import(fixture_file_upload("OE0010_import_test_data.csv"))
-      Team.import(fixture_file_upload("teams.csv"))
-      source = file_fixture("OE0013_two_day_results.csv")
-      @target = File.join(".", "tmp/OE0013_two_day_results.csv")
+      # load day 1 results
+      Config.load
+      Config.last.update(day: 1)
+      source = file_fixture("OE0014_day_one_results.csv")
+      @target = File.join(".", "tmp/OE0014_day_one_results.csv")
+      FileUtils.cp(source, @target)
+      TeamResults.new.perform([@target])
+      # load day 2 results
+      Config.last.update(day: 2)
+      source = file_fixture("OE0014_day_two_results.csv")
+      @target = File.join(".", "tmp/OE0014_day_two_results.csv")
       FileUtils.cp(source, @target)
       TeamResults.new.perform([@target])
     end
@@ -20,10 +26,6 @@ RSpec.describe TeamResults, type: :job do
     it "should calculate the Average Waited Times- varsity" do
       isvm = Day1Awt.where(entryclass: "ISVM").order("runner1_float_time").first
       isvf = Day1Awt.where(entryclass: "ISVF").order("runner1_float_time").first
-      isjvm = Day1Awt.where(entryclass: "ISJVM").order("runner1_float_time").first
-      isjvf = Day1Awt.where(entryclass: "ISJVF").order("runner1_float_time").first
-      isim = Day1Awt.where(entryclass: "ISJVM").order("runner1_float_time").first
-      isif = Day1Awt.where(entryclass: "ISJVF").order("runner1_float_time").first
       expect(isvm.runner1_float_time).to equal(54.18333333333333)
       expect(isvm.runner2_float_time).to equal(57.65)
       expect(isvm.runner3_float_time).to equal(58.233333333333334)
@@ -32,8 +34,7 @@ RSpec.describe TeamResults, type: :job do
       expect(isvf.runner2_float_time).to equal(76.7)
       expect(isvf.runner3_float_time).to equal(79.4)
       expect(isvf.awt_float_time).to equal(74.93333333333334)
-
-    end
+   end
 
     it "should calculate the Average Waited Times- junior varsity" do
       isjvm = Day1Awt.where(entryclass: "ISJVM").order("runner1_float_time").first

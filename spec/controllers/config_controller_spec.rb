@@ -39,6 +39,19 @@ RSpec.describe ConfigController, type: :controller do
     end
   end
 
+  describe "update config change day" do
+    let(:config) {
+      config = Config.new({day: "1"})
+      config.save
+      config
+    }
+    it "update config " do
+      put :update, params: { id: config.id, config: {day: "2" } }
+      expect(response).to have_http_status(:accepted)
+      expect(response.body).to include_json("day": 2)
+    end
+  end
+
   describe "persist config " do
     before do
       Config.delete_all
@@ -51,6 +64,15 @@ RSpec.describe ConfigController, type: :controller do
       time = File.mtime("#{Rails.root}/config/config.yml")
       expect(persist).to include_json("title":"2020 Test","hotfolder":"results","max_time":180)
       expect(time).to be_within(5.second).of Time.now
+    end
+  end
+  describe "load config from yaml" do
+    it "should write config to config.yml" do
+      post :load
+      expect(Config.count).to eq(1)
+      expect(Config.last.as_json).to include_json("unique_id": "Stno", "firstname": "First name",
+             "lastname": "Surname", "entry_class": "Short", "classifier": "Classifier", "time": "Time",
+             "school": "Text2", "team": "Text3", "jrotc": "Text1" )
     end
   end
 
