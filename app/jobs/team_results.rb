@@ -68,4 +68,4 @@ class TeamResults
     {runners: awt_runners, awt: awt}
   end
 
-end
+ end

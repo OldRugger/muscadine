@@ -14,12 +14,14 @@ RSpec.describe ResultsController, type: :controller do
   describe "Get Calculated results" do
     before(:all) do
       # load day 1 results
+      Config.load
+      Config.last.update(day: 1)
       source = file_fixture("OE0014_day_one_results.csv")
       @target = File.join(".", "tmp/OE0014_day_one_results.csv")
       FileUtils.cp(source, @target)
       TeamResults.new.perform([@target])
       # load day 2 results
-      APP_CONFIG[:input]["day"] = 2
+      Config.last.update(day: 2)
       source = file_fixture("OE0014_day_two_results.csv")
       @target = File.join(".", "tmp/OE0014_day_two_results.csv")
       FileUtils.cp(source, @target)
@@ -54,8 +56,8 @@ RSpec.describe ResultsController, type: :controller do
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)
       expect(json_response["awt"].count).to eql(2)
-      expect(json_response["awt"]["day1"].count).to eql(44)
-      expect(json_response["awt"]["day2"].count).to eql(44)
+      expect(json_response["awt"]["day1"].count).to eql(43)
+      expect(json_response["awt"]["day2"].count).to eql(43)
       expect(json_response["awt"]["day1"]["Hogwarts Varsity Silver"]["results"]).to eql("Wilkerson (80.845), Stephenson (81.568), Morse (97.709)")
       expect(json_response["awt"]["day2"]["Hogwarts Varsity Silver"]["results"]).to eql("Wilkerson (64.315), Stephenson (71.212), Morse (76.844)")
     end

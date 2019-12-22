@@ -39,6 +39,19 @@ RSpec.describe ConfigController, type: :controller do
     end
   end
 
+  describe "update config change day" do
+    let(:config) {
+      config = Config.new({day: "1"})
+      config.save
+      config
+    }
+    it "update config " do
+      put :update, params: { id: config.id, config: {day: "2" } }
+      expect(response).to have_http_status(:accepted)
+      expect(response.body).to include_json("day": 2)
+    end
+  end
+
   describe "persist config " do
     before do
       Config.delete_all

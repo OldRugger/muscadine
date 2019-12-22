@@ -104,7 +104,8 @@ export default class ShowRunners extends React.Component {
                 </td>
                 <td>
                   <input
-                    id="hotfolder"
+                    name="hotfolder"
+                    type="text"
                     defaultValue={this.state.config.hotfolder}
                     size="38"
                     onChange={() => {
@@ -119,7 +120,8 @@ export default class ShowRunners extends React.Component {
                 </td>
                 <td>
                   <input
-                    id="max_time"
+                    name="max_time"
+                    type="integer"
                     defaultValue={this.state.config.max_time}
                     size="38"
                     onChange={() => {
@@ -134,11 +136,12 @@ export default class ShowRunners extends React.Component {
                 </td>
                 <td>
                   <input
-                    id="day"
+                    name="day"
+                    type="integer"
                     defaultValue={this.state.config.day}
                     size="38"
                     onChange={() => {
-                      this.handleChangeEvent(this.state.config.title);
+                      this.handleChangeEvent(this.state.config.day);
                     }}
                   />
                 </td>
@@ -150,7 +153,7 @@ export default class ShowRunners extends React.Component {
             <thead>
               <tr>
                 <th>Key</th>
-                <th>Input CSVValue</th>
+                <th>Input CSV Values</th>
               </tr>
             </thead>
             <tbody>
@@ -160,11 +163,12 @@ export default class ShowRunners extends React.Component {
                 </td>
                 <td>
                   <input
-                    id="unique_id"
+                    name="unique_id"
+                    type="text"
                     defaultValue={this.state.config.unique_id}
                     size="15"
                     onChange={() => {
-                      this.handleChangeEvent(this.state.config.title);
+                      this.handleChangeEvent(this.state.config.unique_id);
                     }}
                   />
                 </td>
@@ -175,11 +179,12 @@ export default class ShowRunners extends React.Component {
                 </td>
                 <td>
                   <input
-                    id="firstname"
+                    name="firstname"
+                    type="text"
                     defaultValue={this.state.config.firstname}
                     size="15"
                     onChange={() => {
-                      this.handleChangeEvent(this.state.config.title);
+                      this.handleChangeEvent(this.state.config.firstname);
                     }}
                   />
                 </td>
@@ -190,11 +195,12 @@ export default class ShowRunners extends React.Component {
                 </td>
                 <td>
                   <input
-                    id="lastname"
+                    name="lastname"
+                    type="text"
                     defaultValue={this.state.config.lastname}
                     size="15"
                     onChange={() => {
-                      this.handleChangeEvent(this.state.config.title);
+                      this.handleChangeEvent(this.state.config.lastname);
                     }}
                   />
                 </td>
@@ -205,11 +211,12 @@ export default class ShowRunners extends React.Component {
                 </td>
                 <td>
                   <input
-                    id="entry_class"
+                    name="entry_class"
+                    type="text"
                     defaultValue={this.state.config.entry_class}
                     size="15"
                     onChange={() => {
-                      this.handleChangeEvent(this.state.config.title);
+                      this.handleChangeEvent(this.state.config.entry_class);
                     }}
                   />
                 </td>
@@ -220,11 +227,12 @@ export default class ShowRunners extends React.Component {
                 </td>
                 <td>
                   <input
-                    id="gender"
+                    name="gender"
+                    type="text"
                     defaultValue={this.state.config.gender}
                     size="15"
                     onChange={() => {
-                      this.handleChangeEvent(this.state.config.title);
+                      this.handleChangeEvent(this.state.config.gender);
                     }}
                   />
                 </td>
@@ -235,11 +243,12 @@ export default class ShowRunners extends React.Component {
                 </td>
                 <td>
                   <input
-                    id="school"
+                    name="school"
+                    type="text"
                     defaultValue={this.state.config.school}
                     size="15"
                     onChange={() => {
-                      this.handleChangeEvent(this.state.config.title);
+                      this.handleChangeEvent(this.state.config.school);
                     }}
                   />
                 </td>
@@ -250,11 +259,12 @@ export default class ShowRunners extends React.Component {
                 </td>
                 <td>
                   <input
-                    id="team"
+                    name="team"
+                    type="text"
                     defaultValue={this.state.config.team}
                     size="15"
                     onChange={() => {
-                      this.handleChangeEvent(this.state.config.title);
+                      this.handleChangeEvent(this.state.config.team);
                     }}
                   />
                 </td>
@@ -265,11 +275,12 @@ export default class ShowRunners extends React.Component {
                 </td>
                 <td>
                   <input
-                    id="time"
+                    name="time"
+                    type="text"
                     defaultValue={this.state.config.time}
                     size="15"
                     onChange={() => {
-                      this.handleChangeEvent(this.state.config.title);
+                      this.handleChangeEvent(this.state.config.time);
                     }}
                   />
                 </td>
@@ -280,11 +291,12 @@ export default class ShowRunners extends React.Component {
                 </td>
                 <td>
                   <input
-                    id="classifier"
+                    name="classifier"
+                    type="text"
                     defaultValue={this.state.config.classifier}
                     size="15"
                     onChange={() => {
-                      this.handleChangeEvent(this.state.config.title);
+                      this.handleChangeEvent(this.state.config.classifier);
                     }}
                   />
                 </td>

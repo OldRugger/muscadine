@@ -5,12 +5,14 @@ RSpec.describe TeamResults, type: :job do
   describe "Should import results and calculate team results" do
     before(:all) do
       # load day 1 results
+      Config.load
+      Config.last.update(day: 1)
       source = file_fixture("OE0014_day_one_results.csv")
       @target = File.join(".", "tmp/OE0014_day_one_results.csv")
       FileUtils.cp(source, @target)
       TeamResults.new.perform([@target])
       # load day 2 results
-      APP_CONFIG[:input]["day"] = 2
+      Config.last.update(day: 2)
       source = file_fixture("OE0014_day_two_results.csv")
       @target = File.join(".", "tmp/OE0014_day_two_results.csv")
       FileUtils.cp(source, @target)

@@ -19,7 +19,7 @@ module JobsHelper
   end
 
   def process_results_file(file)
-    entry_class = APP_CONFIG[:input]["fields"]["entry_class"]
+    entry_class = Config.last.entry_class
     ActiveRecord::Base.transaction do
       CSV.foreach(file, :headers => true, :col_sep=> ',', :skip_blanks=>true, :row_sep=>:auto ) do |row|
         Runner.import_results_row(row) if row[entry_class].start_with?('IS')

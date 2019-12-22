@@ -1,5 +1,6 @@
 require 'csv'
 # Runner model
+
 class Runner < ApplicationRecord
   has_one :team_member
   has_one :team, through: :team_member
@@ -13,9 +14,10 @@ class Runner < ApplicationRecord
   end
 
   def self.import_results_row(row)
-    time_key = APP_CONFIG[:input]['fields']['time']
-    classifier_key = APP_CONFIG[:input]['fields']['classifier']
-    day = APP_CONFIG[:input]['day']
+    @config = Config.last
+    time_key = @config.time
+    classifier_key = @config.classifier
+    day = @config.day
     runner = self.find_or_create_runner(row)
     float_time, time = self.get_float_time_from_value(row, time_key)
     if day == 1
@@ -71,21 +73,20 @@ class Runner < ApplicationRecord
   end
 
   def self.find_or_create_runner(row)
-    unique_id =  APP_CONFIG[:input]["fields"]["unique_id"]
+    unique_id = @config.unique_id
     runner = Runner.where(database_id: row[unique_id]).first
     return runner if runner
     self.create_runner(row)
   end
 
   def self.create_runner(row)
-    fields = APP_CONFIG[:input]["fields"]
-    runner = Runner.create(database_id: row[fields["unique_id"]],
-      surname: row[fields["lastname"]].gsub("'"){"\\'"},
-      firstname: row[fields["firstname"]].gsub("'"){"\\'"},
-      school: row[fields["school"]].gsub("'"){"\\'"},
-      entryclass: row[fields["entry_class"]],
-      gender: row[fields["gender"]])
-    Team.assign_member(row, fields, runner) if row[fields["team"]]
+    runner = Runner.create(database_id: row[@config.unique_id],
+      surname: row[@config.lastname].gsub("'"){"\\'"},
+      firstname: row[@config.firstname].gsub("'"){"\\'"},
+      school: row[@config.school].gsub("'"){"\\'"},
+      entryclass: row[@config.entry_class],
+      gender: row[@config.gender])
+    Team.assign_member(row, runner) if row[@config.team]
     runner
   end
 
@@ -138,7 +139,8 @@ class Runner < ApplicationRecord
   end
 
   def update_day_score(classifier, day, awt, cat)
-    max_time = APP_CONFIG[:max_time]
+    @config ||= Config.last
+    max_time = @config.max_time
     float_time = self.send("float_time#{day}")
     if  classifier != "0"
       self.send("day#{day}_score=", 10 + (60 * (max_time/cat) ) )

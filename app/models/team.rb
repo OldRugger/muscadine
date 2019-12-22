@@ -13,11 +13,14 @@ class Team < ApplicationRecord
     self.sort_score  = self.day1_score + self.day2_score
   end
 
-  def self.assign_member(row, fields, runner)
-    team_entry_class = get_team_entry_class(row[fields['entry_class']])
-    team = Team.where(name: row[fields['team']], school:  row[fields['school']], entryclass: team_entry_class).first
-    team = create_team(row, team_entry_class, fields) if !team
-    self.assign_runner_to_team(team, runner, row, fields)
+  def self.assign_member(row, runner)
+    config = Config.last
+    team_entry_class = get_team_entry_class(row[config.entry_class])
+    team_name = row[config.team].rstrip
+    school_name = row[config.school].rstrip
+    team = Team.where(name: team_name, school: school_name, entryclass: team_entry_class).first
+    team = create_team(team_name, school_name, row[config.jrotc], team_entry_class) if !team
+    self.assign_runner_to_team(team, runner, row, config)
   end
   private
 
@@ -39,19 +42,19 @@ class Team < ApplicationRecord
     day_score
   end
 
-  def self.create_team(row, team_entry_class, fields)
-    Team.create(name: row[fields['team']],
+  def self.create_team(team_name, school_name, jrotc, team_entry_class)
+    Team.create(name: team_name,
                 entryclass: team_entry_class,
-                JROTC_branch: row[fields['jrotc']],
-                school: row[fields['school']])
+                JROTC_branch:jrotc,
+                school: school_name)
   end
 
   # match name, school and entry class and no other assignment.
-  def self.assign_runner_to_team(team, runner, row, fields)
+  def self.assign_runner_to_team(team, runner, row, config)
     raise "error: runner already assigned to a team " if TeamMember.where(runner_id: runner.id).first
     raise "error: invalid entry class #{row}" unless runner.entryclass.include? team.entryclass
-    raise "error: runner first name does not match #{row}" unless runner.firstname = row[fields["firstname"]].gsub("'"){"\\'"}
-    raise "error: runner last name does not match #{row}" unless runner.surname = row[fields["lastname"]].gsub("'"){"\\'"}
+    raise "error: runner first name does not match #{row}" unless runner.firstname = row[config.firstname].gsub("'"){"\\'"}
+    raise "error: runner last name does not match #{row}" unless runner.surname = row[config.lastname].gsub("'"){"\\'"}
     TeamMember.create(team_id: team.id,
                       runner_id: runner.id)
   end
