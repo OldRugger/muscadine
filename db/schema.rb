@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_07_124525) do
+ActiveRecord::Schema.define(version: 2019_10_15_131255) do
+
+  create_table "configs", force: :cascade do |t|
+    t.string "title"
+    t.string "hotfolder"
+    t.integer "max_time"
+    t.integer "day"
+    t.string "unique_id"
+    t.string "firstname"
+    t.string "lastname"
+    t.string "entry_class"
+    t.string "gender"
+    t.string "classifier"
+    t.string "time"
+    t.string "school"
+    t.string "team"
+    t.string "jrotc"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "day1_awts", force: :cascade do |t|
     t.string "entryclass"
@@ -69,6 +88,7 @@ ActiveRecord::Schema.define(version: 2019_10_07_124525) do
     t.float "day2_score"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["database_id"], name: "index_runners_on_database_id", unique: true
   end
 
   create_table "team_members", force: :cascade do |t|

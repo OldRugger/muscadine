@@ -1,9 +1,35 @@
+---
 development:
-  title:     '2020 Southeast Interscholastic Championships'
+  title: 2020 Southeast Interscholastic Championships
   hotfolder: results
-  max_time:  180
-
+  max_time: 180
+  input:
+    day: 1
+    fields:
+      unique_id: Stno
+      firstname: First name
+      lastname: Surname
+      entry_class: Short
+      gender: S
+      classifier: Classifier
+      time: Time
+      school: Text2
+      team: Text3
+      jrotc: Text1
 test:
-  title:     '2020 Southeast Interscholastic Championships'
-  hotfolder:  results
-  max_time:   180
+  title: 2020 Test
+  hotfolder: results
+  max_time: 180
+  input:
+    day: 1
+    fields:
+      unique_id: Stno
+      firstname: First name
+      lastname: Surname
+      entry_class: Short
+      gender: S
+      classifier: Classifier
+      time: Time
+      school: Text2
+      team: Text3
+      jrotc: Text1

@@ -59,6 +59,8 @@ class InitialLoad < ActiveRecord::Migration[6.0]
       t.datetime "updated_at"
     end
 
+    add_index "runners", ["database_id"], unique: true, name: "index_runners_on_database_id"
+
     create_table "team_members", force: true do |t|
       t.integer  "team_id"
       t.integer  "runner_id"

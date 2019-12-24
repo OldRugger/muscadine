@@ -1,62 +1,108 @@
 require 'csv'
+# Runner model
 
 class Runner < ApplicationRecord
   has_one :team_member
-  def self.import(file)
-    added = 0
-    skipped = 0
-    self.clear_existing_data
-    CSV.foreach(file.path, headers: true) do |row|
-      if row["Short"].include? "IS"
-        Runner.create(database_id: row["Database Id"],
-                      surname: row["Surname"].gsub("'"){"\\'"},
-                      firstname: row["First name"].gsub("'"){"\\'"},
-                      school: row["City"].gsub("'"){"\\'"},
-                      entryclass: row["Short"],
-                      gender: row['S'])
-        added += 1
-      else
-        skipped += 1
-      end
+  has_one :team, through: :team_member
+
+  def update_runners_scores(day, awt, cat)
+    classifier = self.send("classifier#{day}")
+    if classifier
+      update_day_score(classifier, day, awt, cat)
     end
-    [added, skipped]
+    self.save
   end
 
   def self.import_results_row(row)
-    if (row["Time1"])
-      res = self.get_float_time(row["Time1"])
-      float_time1 = res['float']
-      time1 =  res['time']
-    else
-      float_time1 = 0.0
+    @config = Config.last
+    time_key = @config.time
+    classifier_key = @config.classifier
+    day = @config.day
+    runner = self.find_or_create_runner(row)
+    float_time, time = self.get_float_time_from_value(row, time_key)
+    if day == 1
+      runner.time1 = time
+      runner.float_time1 = float_time
+      runner.classifier1 = row[classifier_key]
     end
-    if (row["Time2"])
-      res = self.get_float_time(row["Time2"])
-      float_time2 = res['float']
-      time2 =  res['time']
-    else
-      float_time2 = 0.0
+    if day == 2
+      runner.time2 = time
+      runner.float_time2 = float_time
+      runner.classifier2 = row[classifier_key]
     end
-    if (row["Total"])
-      res = self.get_float_time(row["Total"])
-      float_total = res['float']
-      total =  res['time']
-    else
-      float_total = 0.0
+    if  runner.float_time1 &&  runner.float_time2
+      runner.float_total_time = (runner.float_time1 ? runner.float_time1 : 0) + (runner.float_time2 ? runner.float_time2 : 0)
+      ## TODO - get display time
     end
-    Runner.where(database_id: row['Database Id'].to_s)
-      .update_all(time1: time1,
-                  float_time1: float_time1,
-                  classifier1: row["Classifier1"].to_s,
-                  time2: time2,
-                  float_time2: float_time2,
-                  classifier2: row["Classifier2"].to_s,
-                  total_time: total,
-                  float_total_time: float_total)
+    runner.save
+  end
 
+  def as_json(options = {})
+    time1 = self.time1 ? self.time1.strftime("%T") : ""
+    time2 = self.time2 ? self.time2.strftime("%T") : ""
+    day1_score = self.day1_score ? self.day1_score.round(4) : ""
+    day2_score = self.day2_score ? self.day2_score.round(4) : ""
+    total_time = get_total_time
+    total_score = get_total_score
+
+    super(options).merge({
+      'team_name' => self.team.name,
+      'time1' => time1,
+      'time2' => time2,
+      'day1_score' => day1_score,
+      'day2_score' => day2_score,
+      'total_time' => total_time,
+      'total_score' => total_score
+    })
   end
 
   private
+
+  def get_total_time
+    total_time = ""
+    if (self.classifier1 == "0" && self.time1) &&
+       (self.classifier2 == "0" && self.time2)
+       total_time = (time1 + time2).strftime("%T")
+    end
+    total_time
+  end
+
+  def get_total_score
+    return (self.day1_score + self.day2_score).round(3) if self.day1_score && self.day2_score
+    ''
+  end
+
+  def self.find_or_create_runner(row)
+    unique_id = @config.unique_id
+    runner = Runner.where(database_id: row[unique_id]).first
+    return runner if runner
+    self.create_runner(row)
+  end
+
+  def self.create_runner(row)
+    runner = Runner.create(database_id: row[@config.unique_id],
+      surname: row[@config.lastname].gsub("'"){"\\'"},
+      firstname: row[@config.firstname].gsub("'"){"\\'"},
+      school: row[@config.school].gsub("'"){"\\'"},
+      entryclass: row[@config.entry_class],
+      gender: row[@config.gender])
+    Team.assign_member(row, runner) if row[@config.team]
+    runner
+  end
+
+
+
+  def self.get_float_time_from_value(row, value)
+    time = row[value]
+    if (time)
+      res = self.get_float_time(time)
+      float_time = res['float']
+      time =  res['time']
+    else
+      float_time = 0.0
+    end
+    [float_time, time]
+  end
 
   def self.clear_existing_data
     TeamMember.delete_all
@@ -67,21 +113,41 @@ class Runner < ApplicationRecord
   end
 
   def self.get_float_time(time)
-    float_time = 0.0
     hhmmss = time.split(":")
-    if (hhmmss.length ==3 ) then
-      time = time
+    length = hhmmss.length
+    if length == 3
+      float_time = self.get_hhmmss_time(hhmmss)
+    elsif length == 2
+      float_time = self.get_mmss_time(hhmmss)
+      time = "00:" + time
+    end
+    {'float' => float_time, 'time' => time}
+  end
+
+  def self.get_hhmmss_time(hhmmss)
       hh = hhmmss[0].to_i
       mm = hhmmss[1].to_i
       ss = hhmmss[2].to_i
-      float_Time = (hh*60) + mm + (ss/60.0)
-    elsif (hhmmss.length == 2) then
-      time = "00:" + time
+      float_time = (hh*60) + mm + (ss/60.0)
+  end
+
+  def self.get_mmss_time( hhmmss)
       mm = hhmmss[0].to_i
       ss = hhmmss[1].to_i
-      float_Time = mm + (ss/60.0)
-    end
-    {'float' => float_Time, 'time' => time}
+      float_time = mm + (ss/60.0)
+      float_time
   end
+
+  def update_day_score(classifier, day, awt, cat)
+    @config ||= Config.last
+    max_time = @config.max_time
+    float_time = self.send("float_time#{day}")
+    if  classifier != "0"
+      self.send("day#{day}_score=", 10 + (60 * (max_time/cat) ) )
+    elsif (classifier === "0" && float_time > 0 && awt)
+      self.send("day#{day}_score=", 60 * (float_time/awt[:awt]) )
+    end
+  end
+
 
 end
