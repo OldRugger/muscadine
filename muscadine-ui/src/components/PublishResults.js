@@ -23,7 +23,7 @@ export default class ShowRunners extends React.Component {
       cells.push(<td class="awt_cat_b">Class</td>);
       if (this.state.results.classes !== undefined) {
         this.state.results.class_list.forEach(item => {
-          cells.push(<td class="awt_cat">{item.toUpperCase()}</td>);
+          cells.push(<th class="awt_cat">{item.toUpperCase()}</th>);
         });
       }
     }
@@ -109,7 +109,7 @@ export default class ShowRunners extends React.Component {
     let day2 = "";
     console.log(runner);
     cells.push(
-      <td>
+      <td width="60%" class="left_justified">
         {runner.firstname} {runner.surname}
       </td>
     );
@@ -127,8 +127,16 @@ export default class ShowRunners extends React.Component {
     ) {
       day2 = Math.round(runner.day2_score * 1000) / 1000;
     }
-    cells.push(<td>{day1}</td>);
-    cells.push(<td>{day2}</td>);
+    cells.push(
+      <td width="20%" class="right_justified">
+        {day1}
+      </td>
+    );
+    cells.push(
+      <td width="20%" class="right_justified">
+        {day2}
+      </td>
+    );
     return cells;
   }
 
@@ -136,9 +144,15 @@ export default class ShowRunners extends React.Component {
     let cells = [];
     cells.push(
       <tr>
-        <th>Runner</th>
-        <th>Day 1</th>
-        <th>Day 2</th>
+        <th width="240px" class="left_justified">
+          Runner
+        </th>
+        <th width="55px" class="right_justified">
+          Day 1
+        </th>
+        <th width="55px" class="right_justified">
+          Day 2
+        </th>
       </tr>
     );
     this.state.results.runners.forEach(runner => {
@@ -166,15 +180,17 @@ export default class ShowRunners extends React.Component {
     }
 
     cells.push(
-      <td>
+      <td class="left_justified">
         <div class="team_name">
           {team.name} ({score})
         </div>
         <b>
           <i>{team.school}</i>
-        </b>
+        </b>{" "}
         - Day 1 ({day1}) - Day 2 ({day2})
-        <table>{this.getTeamRunners(team)}</table>
+        <table width="350px" border="0">
+          {this.getTeamRunners(team)}
+        </table>
       </td>
     );
     return cells;
@@ -186,7 +202,9 @@ export default class ShowRunners extends React.Component {
     cat.forEach(team => {
       cells.push(
         <tr>
-          <td>{place}</td>
+          <td class="publish_place" valign="top">
+            {place}
+          </td>
           <td>{this.getTeamDetails(team)}</td>
         </tr>
       );
