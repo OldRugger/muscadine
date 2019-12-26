@@ -1,0 +1,51 @@
+.publish {
+  height: 100vh;
+  background: white;
+  color: black;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  order-spacing: 0;
+  margin: 0;
+  padding: 0;
+}
+.table #awt_bar {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  background-color: DarkRed;
+}
+.table #team_bar {
+  background-color: DarkRed;
+  color: white;
+  font-weight: bold;
+}
+.table #awt_line {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.table #awt_bar .awt {
+  color: white;
+}
+.table #team_bar .awt {
+  color: white;
+}
+.table .awt_cat {
+  text-align: center;
+}
+.table .awt_cat_b {
+  text-align: center;
+  font-weight: bold;
+}
+.table .header_row {
+  background-color: LightGoldenRodYellow;
+  color: black;
+  font-weight: bold;
+}
+.table .team_name {
+  color: red;
+  font-weight: bold;
+}
+.table .detail {
+  font-size: 90%;
+}
