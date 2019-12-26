@@ -38,7 +38,7 @@ table.center {
   background-color: rgb(112, 1, 1);
   border-bottom: 2px solid rgb(87, 1, 1);
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
   color: lightgrey;
 }
 .awt-day-header {
@@ -51,7 +51,7 @@ table.center {
 .awt-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .awt-col-header {
@@ -70,13 +70,13 @@ table.center {
   border-top: 2px solid rgb(87, 1, 1);
   border-bottom: 2px solid rgb(87, 1, 1);
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
   color: lightgrey;
 }
 .teams-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .teams-row-header {

@@ -45,7 +45,18 @@
 .table .team_name {
   color: red;
   font-weight: bold;
+  text-align: left;
 }
 .table .detail {
   font-size: 90%;
+}
+.left_justified {
+  text-align: left;
+}
+
+.right_justified {
+  text-align: right;
+}
+.publish_place {
+  padding-top: 3px;
 }
