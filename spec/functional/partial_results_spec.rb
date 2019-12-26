@@ -335,11 +335,4 @@ RSpec.describe TeamResults, type: :job do
     expect(isv.day1_score).to eql(179.77993767010634)
   end
 
-  def clear_all_results
-    TeamMember.delete_all
-    Team.delete_all
-    Runner.delete_all
-    Day1Awt.delete_all
-    Day2Awt.delete_all
-  end
 end

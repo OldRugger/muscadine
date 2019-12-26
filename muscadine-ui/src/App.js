@@ -6,6 +6,7 @@ import TeamsPage from "./pages/TeamsPage";
 import AwtPage from "./pages/AwtPage";
 import TeamDetailPage from "./pages/TeamDetailPage";
 import ResultsPage from "./pages/ResultsPage";
+import PublishPage from "./pages/PublishPage";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
       <Route path="/teams" component={TeamsPage} />
       <Route path="/awt" component={AwtPage} />
       <Route path="/results" component={ResultsPage} />
+      <Route path="/publish" component={PublishPage} />
     </Switch>
   );
 }

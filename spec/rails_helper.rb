@@ -62,3 +62,11 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 end
+
+def clear_all_results
+  TeamMember.delete_all
+  Team.delete_all
+  Runner.delete_all
+  Day1Awt.delete_all
+  Day2Awt.delete_all
+end

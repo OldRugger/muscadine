@@ -25,4 +25,6 @@ Rails.application.routes.draw do
 
   post "results/clear" => "results/clear"
 
+  get "teams2" => "teams2#index"
+
 end
