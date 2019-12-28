@@ -90,8 +90,6 @@ class Runner < ApplicationRecord
     runner
   end
 
-
-
   def self.get_float_time_from_value(row, value)
     time = row[value]
     if (time)
@@ -113,6 +111,7 @@ class Runner < ApplicationRecord
   end
 
   def self.get_float_time(time)
+    time = self.float_time_to_hhmmss(time/60.0) if $file_type == "xlsx"
     hhmmss = time.split(":")
     length = hhmmss.length
     if length == 3
@@ -147,6 +146,25 @@ class Runner < ApplicationRecord
     elsif (classifier === "0" && float_time > 0 && awt)
       self.send("day#{day}_score=", 60 * (float_time/awt[:awt]) )
     end
+  end
+
+  #TODO - get from ApplicationHelper
+
+  def self.float_time_to_hhmmss(float_time)
+    if (float_time && float_time > 0)
+      hhmmss = convert_float_to_hhmmss(float_time)
+    else
+      hhmmss = ""
+    end
+    hhmmss
+  end
+
+  def self.convert_float_to_hhmmss(float_time)
+    min = float_time.floor
+    mm = (min % 60).floor
+    hh = (min / 60).floor
+    ss = ((float_time - min) * 60).round
+    hhmmss = "#{hh.to_s}:#{format('%02d', mm)}:#{format('%02d', ss)}"
   end
 
 
