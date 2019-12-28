@@ -18,6 +18,7 @@ class Team < ApplicationRecord
     team_entry_class = get_team_entry_class(row[config.entry_class])
     team_name = row[config.team].rstrip
     school_name = row[config.school].rstrip
+    return if team_name == "0"
     team = Team.where(name: team_name, school: school_name, entryclass: team_entry_class).first
     team = create_team(team_name, school_name, row[config.jrotc], team_entry_class) if !team
     self.assign_runner_to_team(team, runner, row, config)
