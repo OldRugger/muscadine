@@ -9,6 +9,9 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'listen', '>= 3.0.5', '< 3.2'
 gem 'sucker_punch'
 gem 'rack-cors'
+# gem "roo", "~> 2.8.0"
+# Note: PR submitted to fix bug
+gem "roo", git: "https://github.com/OldRugger/roo", branch: "issue-310_off_by_one"
 
 group :development, :test do
   gem 'rspec-rails'

@@ -19,13 +19,31 @@ module JobsHelper
   end
 
   def process_results_file(file)
+    if File.extname(file) == ".xlsx"
+      load_excel_file(file)
+    else
+      load_csv_file(file)
+    end
+    File.delete(file)
+  end
+
+  def load_excel_file(file)
+    $file_type = "xlsx"
+    sheet = Roo::Spreadsheet.open(file).sheet(0).parse(headers: true)
+    config = Config.last
+    sheet.each() do | row |
+      Runner.import_results_row(row) if row[config.entry_class].start_with?('IS')
+    end
+  end
+
+  def load_csv_file(file)
+    $file_type = "csv"
     entry_class = Config.last.entry_class
     ActiveRecord::Base.transaction do
       CSV.foreach(file, :headers => true, :col_sep=> ',', :skip_blanks=>true, :row_sep=>:auto ) do |row|
         Runner.import_results_row(row) if row[entry_class].start_with?('IS')
       end
     end
-    File.delete(file)
   end
 
   def update_day_awt(awt, entryclass, day, cat_time)
