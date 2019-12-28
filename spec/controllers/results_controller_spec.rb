@@ -14,6 +14,7 @@ RSpec.describe ResultsController, type: :controller do
   describe "Get Calculated results" do
     before(:all) do
       # load day 1 results
+      clear_all_results
       Config.load
       Config.last.update(day: 1)
       source = file_fixture("OE0014_day_one_results.csv")

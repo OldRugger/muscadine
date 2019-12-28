@@ -94,7 +94,7 @@ RSpec.describe TeamResults, type: :job do
 
   end
 
-    describe "Change all input coluns - day 1" do
+  describe "Change all input coluns - day 1" do
     before(:all) do
       clear_all_results
       c = Config.last
