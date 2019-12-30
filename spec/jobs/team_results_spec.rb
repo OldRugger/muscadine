@@ -4,6 +4,7 @@ require 'sucker_punch'
 RSpec.describe TeamResults, type: :job do
   describe "Should import results and calculate team results" do
     before(:all) do
+      clear_all_results
       # load day 1 results
       Config.load
       Config.last.update(day: 1)
