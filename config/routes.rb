@@ -27,4 +27,6 @@ Rails.application.routes.draw do
 
   get "teams2" => "teams2#index"
 
+  get "awards" => "awards#index"
+
 end

@@ -1,6 +1,9 @@
 .publish {
-  height: 100vh;
+  height: 100%;
   background: white;
+  color: black;
+}
+.publish a {
   color: black;
 }
 .table {
@@ -59,4 +62,23 @@
 }
 .publish_place {
   padding-top: 3px;
+}
+.awards_table {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.awards_table th {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.table #awards_bar {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  background-color: DarkRed;
+  color: white;
+}
+
+.awards_cell {
+  vertical-align: top;
 }
