@@ -85,9 +85,9 @@ class ResultsController < ApplicationController
       day_score = d.send("day#{day}_score")
       if  day_score
         if results_str != nil
-          results_str.concat(", #{d.surname} (#{day_score.round(3)})")
+          results_str.concat(", #{d.surname} (#{sprintf "%.4f", day_score.round(4)})")
         else
-          results_str = "#{d.surname} (#{day_score.round(3)})"
+          results_str = "#{d.surname} (#{sprintf "%.4f", day_score.round(4)})"
         end
       end
     end

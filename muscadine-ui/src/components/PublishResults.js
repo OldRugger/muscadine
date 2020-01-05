@@ -118,14 +118,14 @@ export default class ShowRunners extends React.Component {
       runner.day1_score !== 9999 &&
       runner.day1_score > 0
     ) {
-      day1 = Math.round(runner.day1_score * 1000) / 1000;
+      day1 = runner.day1_score.toFixed(4);
     }
     if (
       runner.day2_score &&
       runner.day2_score !== 9999 &&
       runner.day2_score > 0
     ) {
-      day2 = Math.round(runner.day2_score * 1000) / 1000;
+      day2 = runner.day2_score.toFixed(4);
     }
     cells.push(
       <td width="20%" class="right_justified">
@@ -170,13 +170,13 @@ export default class ShowRunners extends React.Component {
     let day1 = "";
     let day2 = "";
     if (team.total_score && team.total_score !== 9999 && team.total_score > 0) {
-      score = Math.round(team.total_score * 100) / 100;
+      score = team.total_score.toFixed(2);
     }
     if (team.day1_score && team.day1_score !== 9999 && team.day1_score > 0) {
-      day1 = Math.round(team.day1_score * 1000) / 1000;
+      day1 = team.day1_score.toFixed(3);
     }
     if (team.day2_score && team.day2_score !== 9999 && team.day2_score > 0) {
-      day2 = Math.round(team.day2_score * 1000) / 1000;
+      day2 = team.day2_score.toFixed(3);
     }
 
     cells.push(
