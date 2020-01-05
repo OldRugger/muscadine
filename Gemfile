@@ -12,6 +12,7 @@ gem 'rack-cors'
 # gem "roo", "~> 2.8.0"
 # Note: PR submitted to fix bug
 gem "roo", git: "https://github.com/OldRugger/roo", branch: "issue-310_off_by_one"
+gem 'active_model_serializers'
 
 group :development, :test do
   gem 'rspec-rails'

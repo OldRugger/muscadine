@@ -51,7 +51,7 @@ RSpec.describe TeamResults, type: :job do
       expect(teams[2].day1_score.round(3)).to eq(205.804)
     end
 
-    it "should calculate day 1 junior varsity scores" do
+    it "should calculate day 1 ISI scores" do
       teams = Team.where(entryclass: "ISI").order(:sort_score).all
       expect(teams[0].name).to eq("Hillgrove Crimson")
       expect(teams[0].day1_score.round(3)).to eq(168.773)

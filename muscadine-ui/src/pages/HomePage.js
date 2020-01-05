@@ -36,7 +36,7 @@ export default class HomePage extends React.Component {
           <Link to="/publish">Team Results for publishing</Link>
         </p>
         <p>
-          <Link to="/awards">Top 3 in each class based on AWT</Link>
+          <Link to="/awards">Individual standing based on AWT</Link>
         </p>
       </div>
     );
