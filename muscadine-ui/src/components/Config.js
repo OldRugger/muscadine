@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import "../App.css";
-import ConfigPage from "../pages/ConfigPage";
 
 export default class ShowRunners extends React.Component {
   constructor() {
@@ -56,7 +55,6 @@ export default class ShowRunners extends React.Component {
   }
   handleReset(event) {
     event.preventDefault();
-    const form = event.target;
     const url = "http://" + window.location.hostname + ":5000/config/load";
     axios.post(url).then(
       response => {

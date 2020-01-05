@@ -26,7 +26,7 @@ export default function TeamDetailPage(params) {
 
     // Invoke the async function
     getData();
-  }, []); // Don't forget the `[]`, which will prevent useEffect from running in an infinite loop
+  }, [teamId]);
 
   return data.loading ? (
     <div className="App">
