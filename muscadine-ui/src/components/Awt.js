@@ -71,7 +71,7 @@ export default function Awt() {
             {classes.map(className => {
               return (
                 <td key={className}>
-                  {awt[1][className] ? awt[2][className] : "n/a"}
+                  {awt[2][className] ? awt[2][className] : "n/a"}
                 </td>
               );
             })}

@@ -2,7 +2,17 @@
   height: 100%;
   background: white;
   color: black;
+  font-size: 14px;
 }
+.team-results {
+  border-collapse: separate;
+  border-spacing: 2px;
+}
+
+.team-results td {
+  padding-right: 15px;
+}
+
 .publish a {
   color: black;
 }
@@ -12,6 +22,15 @@
   order-spacing: 0;
   margin: 0;
   padding: 0;
+}
+.team-table {
+  border-collapse: separate;
+  border-spacing: 3px;
+  text-align: center;
+}
+
+.publish-team {
+  vertical-align: top;
 }
 .table #awt_bar {
   border-top: 1px solid black;
@@ -60,7 +79,10 @@
 .right_justified {
   text-align: right;
 }
-.publish_place {
+.center {
+  text-align: center;
+}
+.publish-place {
   padding-top: 3px;
 }
 .awards_table {

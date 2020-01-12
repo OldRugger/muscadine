@@ -25,26 +25,28 @@ export default class Category extends React.Component {
             <tr key={team.name}>
               <td className="team-results">{team.place}</td>
               <td className="team-results">
-                <b>
+                <span className="team-name">
                   <Link to={"/teams/" + team.id}>{team.name}</Link>
-                </b>{" "}
+                </span>{" "}
                 ({team.total_score.toFixed(2)})<br />
-                <i>{team.school} - </i>
+                <b>
+                  <i>{team.school} - </i>
+                </b>
                 Day 1 (
                 {team.day1_score !== 9999.0
                   ? team.day1_score.toFixed(3)
-                  : "0.0"}
+                  : "n/a"}
                 ), Day 2 (
                 {team.day2_score !== 9999.0
                   ? team.day2_score.toFixed(3)
-                  : "0.0"}
+                  : "n/a"}
                 )
                 <br />
                 <b>Day1: </b>
-                {team.day1.results != null ? team.day1.results : "n/a"}
+                {team.day1 != null ? team.day1.results : "n/a"}
                 <br />
                 <b>Day2: </b>
-                {team.day2.results != null ? team.day2.results : "n/a"}
+                {team.day2 != null ? team.day2.results : "n/a"}
                 <br />
               </td>
             </tr>
