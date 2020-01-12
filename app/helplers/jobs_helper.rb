@@ -80,7 +80,7 @@ module JobsHelper
     female = 180
     male = m_awt[:awt] if m_awt
     female = f_awt[:awt] if f_awt
-    cat_time = male > female  ? male : female
+    cat_time = male < female  ? male : female
   end
 
 end

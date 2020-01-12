@@ -109,7 +109,7 @@ export default class ShowRunners extends React.Component {
     let day2 = "";
     console.log(runner);
     cells.push(
-      <td width="60%" class="left_justified">
+      <td class="left_justified">
         {runner.firstname} {runner.surname}
       </td>
     );
@@ -118,23 +118,23 @@ export default class ShowRunners extends React.Component {
       runner.day1_score !== 9999 &&
       runner.day1_score > 0
     ) {
-      day1 = Math.round(runner.day1_score * 1000) / 1000;
+      day1 = runner.day1_score.toFixed(4);
     }
     if (
       runner.day2_score &&
       runner.day2_score !== 9999 &&
       runner.day2_score > 0
     ) {
-      day2 = Math.round(runner.day2_score * 1000) / 1000;
+      day2 = runner.day2_score.toFixed(4);
     }
     cells.push(
-      <td width="20%" class="right_justified">
-        {day1}
+      <td>
+        {runner.time1 ? runner.time1.substring(10, 19) : ""} ({day1})
       </td>
     );
     cells.push(
-      <td width="20%" class="right_justified">
-        {day2}
+      <td>
+        {runner.time2 ? runner.time2.substring(10, 19) : ""} ({day2})
       </td>
     );
     return cells;
@@ -144,15 +144,9 @@ export default class ShowRunners extends React.Component {
     let cells = [];
     cells.push(
       <tr>
-        <th width="240px" class="left_justified">
-          Runner
-        </th>
-        <th width="55px" class="right_justified">
-          Day 1
-        </th>
-        <th width="55px" class="right_justified">
-          Day 2
-        </th>
+        <th class="center">Runner</th>
+        <th class="center">Day 1</th>
+        <th class="center">Day 2</th>
       </tr>
     );
     this.state.results.runners.forEach(runner => {
@@ -170,25 +164,27 @@ export default class ShowRunners extends React.Component {
     let day1 = "";
     let day2 = "";
     if (team.total_score && team.total_score !== 9999 && team.total_score > 0) {
-      score = Math.round(team.total_score * 100) / 100;
+      score = team.total_score.toFixed(2);
     }
     if (team.day1_score && team.day1_score !== 9999 && team.day1_score > 0) {
-      day1 = Math.round(team.day1_score * 1000) / 1000;
+      day1 = team.day1_score.toFixed(3);
     }
     if (team.day2_score && team.day2_score !== 9999 && team.day2_score > 0) {
-      day2 = Math.round(team.day2_score * 1000) / 1000;
+      day2 = team.day2_score.toFixed(3);
     }
 
     cells.push(
-      <td class="left_justified">
+      <td>
         <div class="team_name">
           {team.name} ({score})
         </div>
-        <b>
-          <i>{team.school}</i>
-        </b>{" "}
-        - Day 1 ({day1}) - Day 2 ({day2})
-        <table width="350px" border="0">
+        <div class="left_justified">
+          <b>
+            <i>{team.school}</i>
+          </b>{" "}
+          - Day 1 ({day1}) - Day 2 ({day2})
+        </div>
+        <table className="team-results" border="0">
           {this.getTeamRunners(team)}
         </table>
       </td>
@@ -202,10 +198,10 @@ export default class ShowRunners extends React.Component {
     cat.forEach(team => {
       cells.push(
         <tr>
-          <td class="publish_place" valign="top">
+          <td class="publish-place" valign="top">
             {place}
           </td>
-          <td>{this.getTeamDetails(team)}</td>
+          <td className="publish-team">{this.getTeamDetails(team)}</td>
         </tr>
       );
       place++;
@@ -219,8 +215,8 @@ export default class ShowRunners extends React.Component {
       this.state.results.cat_list.forEach(cat => {
         if (this.state.results.classes[cat].length > 0) {
           cells.push(
-            <td valign="top">
-              <table>
+            <td align="center" className="publish-team">
+              <table className="team-table" border="0">
                 {this.getCatResults(this.state.results.classes[cat])}
               </table>
             </td>
@@ -252,7 +248,7 @@ export default class ShowRunners extends React.Component {
           {this.getAwtResults()}
         </table>
         <br />
-        <table class="table">
+        <table class="table" border="0">
           <tr id="team_bar">
             <th colspan="100%">Team Results</th>
           </tr>

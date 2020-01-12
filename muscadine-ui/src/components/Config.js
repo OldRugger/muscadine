@@ -299,6 +299,22 @@ export default class ShowRunners extends React.Component {
                   />
                 </td>
               </tr>
+              <tr>
+                <td>
+                  <label for="classifier">JROTC</label>
+                </td>
+                <td>
+                  <input
+                    name="jrotc"
+                    type="text"
+                    defaultValue={this.state.config.jrotc}
+                    size="15"
+                    onChange={() => {
+                      this.handleChangeEvent(this.state.config.jrotc);
+                    }}
+                  />
+                </td>
+              </tr>
             </tbody>
           </table>
           <br />
