@@ -84,10 +84,14 @@ export default function TeamDetailPage(params) {
                   {r.firstname} {r.surname}
                 </td>
                 <td>{r.entryclass}</td>
-                <td>{r.time1.substring(11)}</td>
-                <td>{data.day1[r.entryclass].awt}</td>
-                <td>{data.day1[r.entryclass].cat}</td>
-                <td>{r.day1_score.toFixed(3)}</td>
+                <td>{r.time1 ? r.time1.substring(11) : ""}</td>
+                <td>
+                  {data.day1[r.entryclass] ? data.day1[r.entryclass].awt : ""}
+                </td>
+                <td>
+                  {data.day1[r.entryclass] ? data.day1[r.entryclass].cat : ""}
+                </td>
+                <td>{r.day1_score ? r.day1_score.toFixed(3) : ""}</td>
                 <td>{r.time2 ? r.time2.substring(11) : ""}</td>
                 <td>
                   {data.day2[r.entryclass] ? data.day2[r.entryclass].awt : ""}
